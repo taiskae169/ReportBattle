@@ -1,0 +1,12 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(nvm list:*)",
+      "Bash(cmd /c \"nvm list\")",
+      "Bash(cmd /c \"nvm version\")",
+      "Bash(rm -rf node_modules)",
+      "Bash(npm install:*)",
+      "Bash(npm run:*)"
+    ]
+  }
+}
