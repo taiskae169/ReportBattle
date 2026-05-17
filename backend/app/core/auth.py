@@ -6,6 +6,7 @@ from jwt.algorithms import RSAAlgorithm
 from app.core.config import settings
 
 security = HTTPBearer()
+security_optional = HTTPBearer(auto_error=False)
 
 _jwks_cache: dict | None = None
 
@@ -63,3 +64,15 @@ def get_current_user(
             status_code=status.HTTP_401_UNAUTHORIZED,
             detail="Invalid token",
         )
+
+
+def get_current_user_optional(
+    credentials: HTTPAuthorizationCredentials | None = Depends(security_optional),
+) -> dict | None:
+    """공개 리소스 조회용 - 로그인 안 해도 통과"""
+    if credentials is None:
+        return None
+    try:
+        return get_current_user(credentials)
+    except HTTPException:
+        return None
